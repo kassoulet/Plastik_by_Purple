@@ -9,7 +9,7 @@ Reverse engineering and web player for **plastik** by Purple (code vipa, rbecue;
 - `PLASTIKW.EXE`: the Win32 build (DirectDraw, MIDAS 1.1.2 DLL).
 - `PLASTIK.DLL` is not a library but a data archive (33 PCX pictures, one 3DS scene, `kola.bit/.idx`): `re/dll.py`.
 - `SYSTEM.XM`: the 3.8 minute module. The demo is a fixed-step function of the display tick counter and of the module position (order/row), see `re/NOTES.md`.
-- Aspect ratio: 640x400 pixels are shown at 4:3 (the VGA 400-line mode is 70 Hz with non-square pixels).
+- Aspect ratio: 640x400 pixels are shown square (16:10), not stretched to 4:3. The frames are letterboxed 640x300 pictures, and the sphere and logo disc are round only at square pixels (stretching to 4:3 turned them into ovals). The original VGA mode is 70 Hz; whether the authors tuned for a 4:3 CRT is unknown, the picture content says square.
 
 ## What is in this repository
 | path | content |

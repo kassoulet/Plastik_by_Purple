@@ -6,10 +6,10 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
 header{margin:10px 12px 0;text-align:center}h1{font-size:18px;margin:0;letter-spacing:4px}small{opacity:.7}
-#stage{position:relative;aspect-ratio:4/3;width:min(calc(100% - 24px),calc((100vh - 140px)*4/3));background:#000;border:1px solid var(--bd);margin:8px 12px}
+#stage{position:relative;aspect-ratio:8/5;width:min(calc(100% - 24px),calc((100vh - 140px)*8/5));background:#000;border:1px solid var(--bd);margin:8px 12px}
 canvas{width:100%;height:100%;display:block;object-fit:fill}
 #stage:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border:0;margin:0;display:flex;align-items:center;justify-content:center}
-#stage:fullscreen canvas{width:min(100vw,100vh*4/3);height:min(100vh,100vw*3/4)}
+#stage:fullscreen canvas{width:min(100vw,100vh*8/5);height:min(100vh,100vw*5/8)}
 #go{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#000c;text-align:center;padding:12px}
 #go[hidden]{display:none}
 button{background:#1d1828;color:var(--fg);border:1px solid #555;border-radius:4px;padding:6px 12px;cursor:pointer;font:inherit}
@@ -20,7 +20,7 @@ button:hover,button:focus-visible{border-color:var(--ac);outline:none}
 a{color:var(--ac)}kbd{border:1px solid #777;border-radius:3px;padding:0 4px;background:#222;font-size:12px}
 #note{max-width:760px;margin:0 12px 12px;font-size:13px;opacity:.85;text-align:center}
 </style></head><body>
-<header><h1>PLASTIK</h1><small>Purple - The Party 1998 - 640x400 shown 4:3</small></header>
+<header><h1>PLASTIK</h1><small>Purple - The Party 1998 - 640x400 square pixels (16:10)</small></header>
 <div id="stage"><canvas id="cv" width="640" height="400"></canvas>
  <div id="go"><h2 style="margin:0">PLASTIK</h2><div id="gomsg">Loading...</div><button id="gob" class="pri" hidden>Play</button><small>Sound starts with this click. <kbd>Space</kbd> pause, <kbd>&larr;</kbd><kbd>&rarr;</kbd> seek, <kbd>F</kbd> fullscreen.</small></div></div>
 <div id="bar"><button id="pp">Play</button><button id="b5">-5s</button><input id="seek" type="range" min="0" max="2304" value="0" aria-label="Seek"><button id="f5">+5s</button><span id="tm">0:00 / 0:00</span>
