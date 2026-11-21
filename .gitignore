@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+re/golden*/
+re/raw*/
+# originals stay untracked
+/PLASTIK.DLL
+/PLASTIK.EXE
+/PLASTIKW.EXE
+/SYSTEM.XM

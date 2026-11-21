@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PLASTIK - the assembly worth reading (work in progress)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+  :root{--bg:#fff;--fg:#1d1d22;--mut:#666;--ac:#c4155a;--code:#f3f3f6;--bd:#d8d8e0}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b0b10;--fg:#d8d8e0;--mut:#9a9aa8;--ac:#ff6a9a;--code:#17171f;--bd:#33333f}}
+  *{box-sizing:border-box}
+  body{margin:0 auto;max-width:62rem;padding:0 16px;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif}
+  #wunav{display:flex;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:8px;border-bottom:1px solid var(--bd);font-size:14px}
+  a{color:var(--ac)}
+  h1,h2,h3,h4{line-height:1.25;margin-top:1.8em}
+  img{max-width:100%;height:auto;image-rendering:auto}
+  pre{background:var(--code);border:1px solid var(--bd);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:13px;line-height:1.4}
+  code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:.92em;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;overflow-wrap:normal}
+  table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}
+  td,th{border:1px solid var(--bd);padding:4px 8px}
+  blockquote{border-left:3px solid var(--bd);margin-left:0;padding-left:14px;color:var(--mut)}
+  #TOC{font-size:14px}#TOC ul{padding-left:1.2em}
+  #TOC>ul{padding-left:0;list-style:none}
+  details#toc-box{margin:12px 0}
+  </style>
+</head>
+<body>
+<nav id="wunav"><a href="../index.html">&larr; the demo</a> <a href="WRITEUP-asm.html">asm</a> <a href="WRITEUP-effects.html">effects</a> <a href="https://github.com/kassoulet/Plastik_by_Purple">README on GitHub</a></nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#plastik---the-assembly-worth-reading-work-in-progress"
+id="toc-plastik---the-assembly-worth-reading-work-in-progress">PLASTIK -
+the assembly worth reading (work in progress)</a>
+<ul>
+<li><a
+href="#1-a-game-style-fixed-timestep-driven-by-the-display-refresh"
+id="toc-1-a-game-style-fixed-timestep-driven-by-the-display-refresh">1.
+A game-style fixed timestep, driven by the display refresh</a></li>
+<li><a href="#2-three-colour-channels-in-one-double"
+id="toc-2-three-colour-channels-in-one-double">2. Three colour channels
+in one double</a></li>
+<li><a href="#3-getting-at-the-code-at-all-pmodew-in-an-emulator"
+id="toc-3-getting-at-the-code-at-all-pmodew-in-an-emulator">3. Getting
+at the code at all: PMODE/W in an emulator</a></li>
+<li><a href="#4-triple-buffering-with-the-linear-framebuffer"
+id="toc-4-triple-buffering-with-the-linear-framebuffer">4. Triple
+buffering with the linear framebuffer</a></li>
+<li><a href="#a-transcendental-trap-in-the-emulator-not-in-the-demo"
+id="toc-a-transcendental-trap-in-the-emulator-not-in-the-demo">A
+transcendental trap in the emulator, not in the demo</a></li>
+<li><a href="#from-listing-to-javascript-a-static-recompiler"
+id="toc-from-listing-to-javascript-a-static-recompiler">From listing to
+JavaScript: a static recompiler</a></li>
+<li><a href="#scenes-a-and-b-as-recompiled-js"
+id="toc-scenes-a-and-b-as-recompiled-js">Scenes A and B as recompiled
+JS</a></li>
+<li><a href="#scenes-c-e-and-h-the-same-recipe-three-more-lessons"
+id="toc-scenes-c-e-and-h-the-same-recipe-three-more-lessons">Scenes C, E
+and H: the same recipe, three more lessons</a></li>
+<li><a href="#scene-g-code-that-is-only-reachable-through-pointers"
+id="toc-scene-g-code-that-is-only-reachable-through-pointers">Scene G:
+code that is only reachable through pointers</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="plastik---the-assembly-worth-reading-work-in-progress">PLASTIK -
+the assembly worth reading (work in progress)</h1>
+<p>Addresses are linear addresses of the unpacked flat image
+(<code>re/unpack_clean.py</code>), listing from
+<code>objdump -M intel</code>. Only things actually read so far are
+here; the engine's rasterisers are not yet analysed.</p>
+<h2 id="1-a-game-style-fixed-timestep-driven-by-the-display-refresh">1.
+A game-style fixed timestep, driven by the display refresh</h2>
+<p>Every scene is the same skeleton (scene A,
+<code>0x28900</code>..<code>0x28c98</code>):</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode asm"><code class="sourceCode fasm"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>28900: <span class="bu">cmp</span>  <span class="dt">dword</span> <span class="op">[</span><span class="bn">0xec0030</span><span class="op">],</span> <span class="dv">1</span>      <span class="co">; ticks accumulated by the timer callback</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>28907: <span class="cf">jbe</span>  render                   <span class="co">; nothing (or only the leftover 1) -&gt; just draw</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>2890d: <span class="cf">call</span> <span class="bn">0x3d220</span>                  <span class="co">; music position = order&lt;&lt;8 | row  (MIDAS play status)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>...                                  <span class="co">; one logic step (state += f(tick), scene switches on position)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>28c48: <span class="bu">mov</span>  <span class="kw">eax</span><span class="op">,</span> <span class="op">[</span><span class="bn">0xec0030</span><span class="op">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>28c4d: <span class="bu">dec</span>  <span class="dt">dword</span> <span class="op">[</span><span class="bn">0xec0030</span><span class="op">]</span>         <span class="co">; consume one tick</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>28c8b: <span class="bu">cmp</span>  <span class="dt">dword</span> <span class="op">[</span><span class="bn">0xec0030</span><span class="op">],</span> <span class="dv">1</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>28c92: <span class="cf">ja</span>   <span class="bn">0x2890d</span>                  <span class="co">; catch up: as many steps as ticks passed</span></span></code></pre></div>
+<p>The counter is bumped by a three-instruction callback at
+<code>0x3d190</code> (<code>inc dword [0xec0030]</code>) that MIDAS
+calls once per vertical retrace (<code>0x32f70</code> programs it after
+<em>measuring</em> the refresh with the <code>0x3da</code> retrace bit:
+<code>in al,dx / test al,8</code> loops at <code>0x32fe9</code>, then
+PIT channel 0 mode 0 <code>out 0x43,0x30</code>). Consequence for the
+port: the picture is a pure function of the number of logic steps and of
+the XM position, never of wall time; a slow PC drops frames but not
+speed. Our harness exploits exactly this (add K ticks per flip).</p>
+<h2 id="2-three-colour-channels-in-one-double">2. Three colour channels
+in one double</h2>
+<p>The 3D shading/filter code at <code>0x2accc</code> (called from
+<code>0x1d977</code>, about 3 KB unrolled four pixels at a time) builds
+RGB565 like this:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode asm"><code class="sourceCode fasm"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">fld</span>   <span class="dt">dword</span> <span class="op">[</span><span class="kw">eax</span><span class="op">*</span><span class="dv">4</span><span class="op">+</span><span class="bn">0xc5b740</span><span class="op">]</span>        <span class="co">; weight A of this sample</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="kw">ch</span><span class="op">,</span> <span class="op">[</span><span class="kw">edx</span><span class="op">+</span><span class="bn">0xb35680</span><span class="op">]</span>            <span class="co">; u &gt;&gt; 2 (table of 256 bytes)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="kw">cl</span><span class="op">,</span> <span class="op">[</span><span class="kw">ebx</span><span class="op">+</span><span class="bn">0xcee080</span><span class="op">]</span>            <span class="co">; v index</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">fmul</span>  <span class="dt">qword</span> <span class="op">[</span><span class="kw">ecx</span><span class="op">*</span><span class="dv">8</span><span class="op">+</span><span class="bn">0xc30f00</span><span class="op">]</span>        <span class="co">; 64K-entry table of doubles</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>...  (4 products<span class="op">,</span> faddp<span class="op">)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">fstp</span>  <span class="dt">qword</span> <span class="op">[</span><span class="bn">0x112dd0</span><span class="op">]</span>              <span class="co">; store the double ...</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="kw">dl</span><span class="op">,</span> <span class="op">[</span><span class="bn">0x112dd0</span><span class="op">]</span>  <span class="co">; shr edx,3   ; ... and read its BYTES 0, 2, 4 back:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="kw">cl</span><span class="op">,</span> <span class="op">[</span><span class="bn">0x112dd2</span><span class="op">]</span>  <span class="co">; shr ecx,2 ; shl ecx,5  ; or ecx,edx</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="kw">dl</span><span class="op">,</span> <span class="op">[</span><span class="bn">0x112dd4</span><span class="op">]</span>  <span class="co">; shr edx,3 ; shl edx,11 ; or edx,ecx   -&gt; RGB565</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">mov</span>   <span class="op">[</span><span class="kw">edi</span><span class="op">],</span> <span class="kw">edx</span>  <span class="co">; mov [edi+0x500], edx                      ; write the pixel pair, and the line below</span></span></code></pre></div>
+<p>Reading the channels out of the byte lanes of a double's mantissa
+lets <em>one</em> <code>fmul</code>/<code>faddp</code> scale and
+accumulate three colour channels at once (hypothesis, to be checked
+against the tables: the entries are doubles with R, G, B in separate
+16-bit lanes; the operand roles in the comments above are guesses from
+the index arithmetic). It also doubles each result vertically
+(<code>[edi+0x500]</code> = next 640x400 line, 4 bytes = 2 pixels per
+store): a 320x200 work image shown at 640x400. The exact encoding of the
+tables (built when the scene starts; they are zero in the entry dump) is
+still to be decoded from a RAM dump (<code>DUMP=</code> in
+<code>re/harness.py</code>).</p>
+<h2 id="3-getting-at-the-code-at-all-pmodew-in-an-emulator">3. Getting
+at the code at all: PMODE/W in an emulator</h2>
+<p>The MZ file is a small LZ-style stub that unpacks PMODE/W, which
+reads its own <code>PMW1</code> overlay with DOS int 21h, decompresses
+and relocates the objects, enters protected mode and jumps to Watcom's
+<code>_cstart</code> (<code>0x5386c</code>, <code>jmp short</code> over
+the "WATCOM C/C++32 Run-Time system" banner). Running the stub's own
+code under Unicorn with a 20-line DOS stub (file I/O on the EXE itself)
+unpacks the program in 1.5 s, no unpacker to write. Pitfall met: DPMI
+<code>0300</code> calls to VBE 4F00 must keep the mode list within the
+first 256 bytes of the info block, because the program allocates a
+512-byte DOS block per call and the next block overlaps the tail.</p>
+<h2 id="4-triple-buffering-with-the-linear-framebuffer">4. Triple
+buffering with the linear framebuffer</h2>
+<p>Frames are flipped with VBE function 4F07 (set display start) using y
+= 0 / 400 / 800 of a 1200-line virtual screen in the LFB; each call is
+one finished frame, which is what the harness hooks to grab frames and
+to advance its clock.</p>
+<h2 id="a-transcendental-trap-in-the-emulator-not-in-the-demo">A
+transcendental trap in the emulator, not in the demo</h2>
+<p>The palette of the stained-glass tunnel is built by multiplying in
+the log domain: <code>exp[log[4*v] + log[210]]</code>, with a byte log
+table made by <code>chop(46.1662*ln x)</code>. The builder (0x1d76c)
+runs
+<code>fld c; fild x; fldln2; fxch; fyl2x; fmul st,st(1); frndint; fistp</code>
+for x = 0..511. For x = 0 the real FPU gives -infinity (masked
+divide-by-zero), pops once, and <code>fistp</code> stores the "integer
+indefinite" whose low byte is 0. Unicorn 2.1.4 forgot the pop for that
+case, the stack grew by one <code>ln 2</code> and the whole table became
+<code>ln x * ln 2</code>: black palette, black scene. The cure in the
+harness is to feed x = 1 (same byte, 0). Watcom emits
+<code>frndint</code> with the control word forced to chop (0x1f7f)
+before every float-to-int, so the stored values are truncations; the JS
+port reproduces them with <code>Math.trunc</code>.</p>
+<h2 id="from-listing-to-javascript-a-static-recompiler">From listing to
+JavaScript: a static recompiler</h2>
+<p>Scene D runs in the browser as the original code, not as a
+re-implementation. <code>re/x86js.py</code> reads an
+<code>objdump -M intel</code> listing and emits one JS function per x86
+function (<code>for(;;)switch(pc)</code>, one <code>case</code> per
+instruction), with registers as locals, flags computed lazily (dead flag
+writes are stripped), a flat <code>ArrayBuffer</code> for memory and a
+Float64 array for the x87 stack. The x87 control word is 0x127f (double
+precision), so JS doubles agree with the FPU; <code>frndint</code> with
+round-to-chop is <code>Math.trunc</code>. Three bugs only showed up by
+diffing RAM with the emulator: <code>push [esp+x]</code> reads its
+operand before esp moves, a memory operand without a size takes it from
+the register, and <code>0x13</code> is hexadecimal. The display lags one
+flip behind the render, and the first frame reads uninitialised stack.
+Only the 16x16 block routine (the channel-in-a-double trick of section
+2) is hand-ported, as <code>plastik-d-block.mjs</code>, 13.9 ms per
+frame for the whole scene.</p>
+<h2 id="scenes-a-and-b-as-recompiled-js">Scenes A and B as recompiled
+JS</h2>
+<p>Scenes A and B are not rewritten: <code>re/x86js.py</code> turns
+their x86 into JS (flat memory, lazy flags, x87 stack) and the output is
+diffed bit-exact against the emulator, 955 and 957 frames. V8 refuses to
+optimise a function above ~60 KB of bytecode, so the recompiler splits
+big functions into chunks that share the module-level registers (B went
+from 600 to 27 ms/frame).</p>
+<h2 id="scenes-c-e-and-h-the-same-recipe-three-more-lessons">Scenes C, E
+and H: the same recipe, three more lessons</h2>
+<p>C (the satellite photo with a digit column), E (a shiny 3D object
+over a striped background) and H (the "purple" logo made of discs) are
+recompiled the same way and are bit-exact against the emulator (717, 478
+and 250 frames). What they taught:</p>
+<ul>
+<li><code>0x536f1</code> is the real <code>sprintf</code>: the digit
+column of C is printed with <code>"%13d"</code>, so the recompiler needs
+a native that formats like it (<code>R.n_sprintf</code>), not a
+stub.</li>
+<li>A pruned entry snapshot is only as good as its page trace: natives
+that read memory on their own (memcpy, memset, sprintf) must mark the
+pages they read, and a range read marks every page in the range,
+otherwise the scene reads a zero page and diverges one or two frames
+later.</li>
+<li>The x87 registers are state too. QEMU/Unicorn keep stale values in
+"empty" registers and a scene that reads a register it never wrote sees
+them; the entry dump therefore carries st(0..7) (used by F, which is not
+wired yet, see <code>re/NOTES.md</code>).</li>
+<li>F taught the x87 lesson: the original pops four values from an
+already empty FPU stack every frame (<code>faddp st(0),st</code> x4 at
+0x3d56c). Hardware masks the underflow and the ring wraps, nothing
+observable happens; a linear JS stack drifts off its array. The
+recompiler now keeps an empty stack empty on pop.</li>
+</ul>
+<h2 id="scene-g-code-that-is-only-reachable-through-pointers">Scene G:
+code that is only reachable through pointers</h2>
+<p>G's loop calls its renderer and its present function through a table
+of function pointers (<code>call [0xec106c]</code> and friends) that the
+init code fills at run time, so the static call graph from the scene's
+entry never reaches them. The harness logs the targets
+(<code>INDCALL=1</code>), the recompiler takes them as extra entries and
+turns <code>call [mem]</code> into a lookup in a table of every
+generated function. Because the present is then three calls deep, a
+scene resumes by finishing the open functions from their call sites,
+innermost first. Two small things were wrong in the first guess: the
+picture is not at the usual buffer pointer (the present function
+receives it in <code>eax</code>), and the DPMI/selector code that the
+call graph also drags in is never executed in the 704 frames, so it
+stays a throwing stub.</p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>PLASTIK - effects (work in progress)</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+  :root{--bg:#fff;--fg:#1d1d22;--mut:#666;--ac:#c4155a;--code:#f3f3f6;--bd:#d8d8e0}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b0b10;--fg:#d8d8e0;--mut:#9a9aa8;--ac:#ff6a9a;--code:#17171f;--bd:#33333f}}
+  *{box-sizing:border-box}
+  body{margin:0 auto;max-width:62rem;padding:0 16px;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,sans-serif}
+  #wunav{display:flex;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:8px;border-bottom:1px solid var(--bd);font-size:14px}
+  a{color:var(--ac)}
+  h1,h2,h3,h4{line-height:1.25;margin-top:1.8em}
+  img{max-width:100%;height:auto;image-rendering:auto}
+  pre{background:var(--code);border:1px solid var(--bd);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:13px;line-height:1.4}
+  code{background:var(--code);padding:1px 4px;border-radius:3px;font-size:.92em;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;overflow-wrap:normal}
+  table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}
+  td,th{border:1px solid var(--bd);padding:4px 8px}
+  blockquote{border-left:3px solid var(--bd);margin-left:0;padding-left:14px;color:var(--mut)}
+  #TOC{font-size:14px}#TOC ul{padding-left:1.2em}
+  #TOC>ul{padding-left:0;list-style:none}
+  details#toc-box{margin:12px 0}
+  </style>
+</head>
+<body>
+<nav id="wunav"><a href="../index.html">&larr; the demo</a> <a href="WRITEUP-asm.html">asm</a> <a href="WRITEUP-effects.html">effects</a> <a href="https://github.com/kassoulet/Plastik_by_Purple">README on GitHub</a></nav>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#plastik---effects-work-in-progress"
+id="toc-plastik---effects-work-in-progress">PLASTIK - effects (work in
+progress)</a>
+<ul>
+<li><a href="#structure" id="toc-structure">Structure</a></li>
+<li><a href="#assets" id="toc-assets">Assets</a></li>
+<li><a href="#3d-engine" id="toc-3d-engine">3D engine</a></li>
+<li><a href="#not-done" id="toc-not-done">Not done</a></li>
+<li><a href="#scene-d-in-the-player"
+id="toc-scene-d-in-the-player">Scene D in the player</a></li>
+<li><a href="#scenes-a-and-b-ported-by-recompilation"
+id="toc-scenes-a-and-b-ported-by-recompilation">Scenes A and B (ported
+by recompilation)</a></li>
+<li><a href="#scenes-c-e-f-and-h-ported-by-recompilation"
+id="toc-scenes-c-e-f-and-h-ported-by-recompilation">Scenes C, E, F and H
+(ported by recompilation)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="plastik---effects-work-in-progress">PLASTIK - effects (work in
+progress)</h1>
+<p>Nothing here is ported yet: the frames in the web player are captured
+from the original code running under Unicorn (see README, "Exact vs
+approximated").</p>
+<h2 id="structure">Structure</h2>
+<p><code>main</code> (0x2aa..) calls eight scene functions in order,
+each guarded by a quit flag. Every scene is a fixed-step loop on the 70
+Hz tick counter, switching on the XM (order:row) position.</p>
+<table>
+<thead>
+<tr>
+<th>scene</th>
+<th>function</th>
+<th>starts</th>
+<th>what it shows (from captured frames)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0x28264</td>
+<td>0.0 s (0:0)</td>
+<td>credit names as lit sphere sprites, "plastik" logo, star field</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0x26278</td>
+<td>41.0 s (7:63)</td>
+<td>flat-shaded shards flying over a 640x400 picture</td>
+</tr>
+<tr>
+<td>C</td>
+<td>0x22af4</td>
+<td>81.9 s (16:0)</td>
+<td>not yet described</td>
+</tr>
+<tr>
+<td>D</td>
+<td>0x1ddb4</td>
+<td>112.8 s (22:1)</td>
+<td>rotating stained-glass tunnel: a 40x19 grid of 16-pixel blocks warps
+a 256x256 texture, lit through a 32-level palette table (fade to black
+and to white)</td>
+</tr>
+<tr>
+<td>E-H</td>
+<td>0x24168, 0x21e40, 0x2747c, 0x29634</td>
+<td>later</td>
+<td>not yet described</td>
+</tr>
+</tbody>
+</table>
+<h2 id="assets">Assets</h2>
+<p><code>PLASTIK.DLL</code> is a flat archive: 33 PCX (credit names,
+environment map, aerial photo maps, clouds, 2200x100 greetings strip),
+one 3DS scene (<code>lugter2.3ds</code>), and
+<code>kola.bit</code>/<code>kola.idx</code> (3890 offsets into a
+bit-packed stream, unparsed, scene unknown).</p>
+<h2 id="3d-engine">3D engine</h2>
+<p>Pure x87 + integer. The 3DS loader builds a node hierarchy, normals
+and light tables at start-up (the "Doing hierarchy" and "Calculating
+lighttables" messages). Output is RGB565 at 640x400, triple buffered. A
+pixel pack routine at 0x2accc reads the colour channels from the bytes
+of a double (hypothesis, tables not yet decoded).</p>
+<h2 id="not-done">Not done</h2>
+<p>Every effect renderer except scene D (A, B, C, E-H are still the
+captured video), the exact per-scene timings of C-H, and kola.bit.</p>
+<h2 id="scene-d-in-the-player">Scene D in the player</h2>
+<p>Rotating stained-glass tunnel (112.7 s to 143.4 s): a 40x19 grid of
+16x16 blocks warps a 256x256 texture into a 640x300 picture centred in
+the 640x400 mode; each block is 8x8 bilinear texels drawn 2x2, shaded
+through a 64x768-byte palette-scale table. It is rendered live by the
+recompiled original and matches the emulator's frames pixel for pixel
+(see README for the caveats).</p>
+<h2 id="scenes-a-and-b-ported-by-recompilation">Scenes A and B (ported
+by recompilation)</h2>
+<p>A is an 8-bit software renderer (640x300 index buffer, palette row
+per fade level, anti-aliased lines, alpha-blended fade); B is a
+flat-shaded 3D polygon engine writing RGB565 directly. Both run as the
+original code recompiled to JS and match the emulator frame for frame;
+see <code>re/NOTES.md</code> for the hand-ported loops and natives.</p>
+<h2 id="scenes-c-e-f-and-h-ported-by-recompilation">Scenes C, E, F and H
+(ported by recompilation)</h2>
+<p>C shows a photo with a scrolling column of digits, E a rotating shiny
+3D object in front of a striped background, H the "purple" logo built
+from discs (it runs 250 flips until the demo exits). All three are the
+original code recompiled to JS, bit-exact against the emulator's frames;
+see <code>re/NOTES.md</code> for sizes and browser speed. F (3824..4302)
+and G (4302..5006) are ported the same way: every scene is now live
+JavaScript and the player ships no video.</p>
+</body>
+</html>

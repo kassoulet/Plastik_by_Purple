@@ -1,0 +1,38 @@
+PLASTIK    |                                                          |   PURPLE
+------------                                                          ----------
+Creators:
+code:
+        vipa     (vipa@purple.dk)
+        rbecue   (rbecue@purple.dk)
+gfx/design:
+        thorsten (thorsten@purple.dk)
+        mads     (mads@purple.dk)
+music:
+        mystical (mystical@purple.dk)
+
+We really like feedback!
+
+Check our new homepage: http://www.purple.dk
+
+To run this demo, please:
+Have a soundcard.
+Have a P200 or better.
+
+DOS version:
+VESA 2.0 With linear framebuffer in:
+640x4x0x16 bit
+use -? for options
+
+Press [SPACE] for a screenshot. (saved as .bmp)
+Press [SHIFT] for fps rate.
+
+Windows version:
+Win95/WinNT
+DirectX 3+ (Included in WinNT SP3)
+Ability to run 640x4x0 in 16bit or 15bit colours.
+Use F12 at your own risk.
+Lower midasbuffer for better timing
+enable interpolation for better sound quality!
+
+KOLA
+SeeU at The Party 98!
