@@ -41,5 +41,15 @@ addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type!=='r
   else if(k==='ArrowRight'){e.preventDefault();seek(cur()+(e.shiftKey?10:5));}else if(k==='Home')seek(0);else if(k==='End')seek(dur-1);
   else if(k==='f'||k==='F')$('fs').click();else if(k==='m'||k==='M')$('mute').click();});
 SC[0].p.finally(()=>{$('gomsg').hidden=true;$('gob').hidden=false;$('gob').focus();});   // Play is offered once scene A is loaded
-window.pl={seek,toggle,cur,get playing(){return playing;}};
+// Pre-warm: V8 has no type feedback for recompiled code first reached later in a scene, so those frames run cold or deoptimise (first frames 50-1000 ms, E's wireframes at frame ~120, H at 25 and 215).
+// While the Play button is showing, step each scene's frames in 25 ms slices; stops at once on Play. Output is unaffected: the run is deterministic and frame() restores a checkpoint on the first real request. ?nowarm disables it.
+const WARM=[['a',30],['b',10],['c',4],['d',6],['e',8],['f',8],['g',10],['h',10],['e',135],['h',28],['f',133],['c',20]],warm={frames:0,done:false,ms:0};
+(async()=>{const T=performance.now();
+  if(!/nowarm/.test(location.search)){await SC[0].p;
+    for(const [id,k] of WARM){const sc=SC.find(x=>x.id===id);await sc.p;sc.wn=sc.wn||0;
+      while(sc.s&&sc.wn<k){if(started)return;const t=performance.now();
+        while(sc.wn<k&&performance.now()-t<25){if(!sc.s.frame(sc.wn)){sc.wn=k;break;}sc.wn++;warm.frames++;}
+        await new Promise(r=>setTimeout(r));}}}
+  warm.done=true;warm.ms=performance.now()-T;})();
+window.pl={seek,toggle,cur,warm,get playing(){return playing;}};
 loop();

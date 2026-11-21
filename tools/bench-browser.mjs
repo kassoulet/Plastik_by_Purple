@@ -1,4 +1,4 @@
-// Browser speed (headless Chrome): ms/frame of each JS scene stepped straight from its entry state. node tools/bench-browser.mjs [ids]. Budget 42.9 ms (23.3 fps).
+// Browser speed (headless Chrome): ms/frame of each JS scene stepped straight from its entry state. node tools/bench-browser.mjs [ids]; WARM=1 lets the player's idle pre-warm (main.js) finish first (default: index.html?nowarm, cold JIT). Budget 42.9 ms (23.3 fps).
 import {spawn} from 'child_process';import fs from 'fs';import http from 'http';import path from 'path';import {fileURLToPath} from 'url';
 const root=path.join(path.dirname(fileURLToPath(import.meta.url)),'../web');
 const mime={'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.mp4':'video/mp4','.wasm':'application/wasm'};
@@ -13,7 +13,7 @@ const tabs=await (await fetch('http://localhost:'+PORT+'/json')).json();const ws
 let id=0;const pend={};ws.onmessage=m=>{const d=JSON.parse(m.data);if(d.id&&pend[d.id])pend[d.id](d);if(d.method==='Runtime.exceptionThrown')console.log('EXC',JSON.stringify(d.params.exceptionDetails).slice(0,300));};
 const send=(method,params={})=>new Promise(r=>{pend[++id]=r;ws.send(JSON.stringify({id,method,params}))});
 const ev=async e=>(await send('Runtime.evaluate',{expression:e,returnByValue:true,awaitPromise:true})).result.result.value;
-await send('Runtime.enable');await send('Page.navigate',{url:`http://localhost:${srv.address().port}/index.html`});
+await send('Runtime.enable');await send('Page.navigate',{url:`http://localhost:${srv.address().port}/index.html${process.env.WARM?'':'?nowarm'}`});if(process.env.WARM){const t=Date.now();while(!(await ev('window.pl&&window.pl.warm.done'))&&Date.now()-t<180000)await wait(500);console.log('warm',JSON.stringify(await ev('window.pl.warm')));}
 const ids=(process.argv[2]||'a,b,c,d,e,f,h').split(',');
 for(const id of ids){const r=await ev(`(async()=>{const m=await import('./js/plastik-${id}-scene.mjs');const xm=await (await fetch('assets/system-times.json')).json();const b=new Uint8Array(await (await fetch('assets/plastik-${id}-init.bin')).arrayBuffer());
 const f0={a:0,b:955,c:1912,d:2629,e:3346,f:3824,h:5006}['${id}'];const s=new m['${id.toUpperCase()}Scene'](m.unpackInit(b),xm,f0);const N=300,t=[];for(let i=0;i<N;i++){const a=performance.now();if(!s.step())break;t.push(performance.now()-a);}
