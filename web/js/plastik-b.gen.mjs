@@ -2989,6 +2989,7 @@ case 0x535d2:/*push ebp*/ r_=ebp;esp=(esp-4)|0;wr32(esp,r_);
 case 0x535d3:/*mov ebp,ecx*/ ebp=(ecx)|0;
 case 0x535d5:/*xor ecx,ecx*/ a_=(ecx)>>>0;b_=(ecx)>>>0;t=(a_^b_)|0;ecx=(t)|0;
 case 0x535d7:/*mov esi,DWORD PTR ds:0x124db58*/ esi=(rd32(0x124db58))|0;
+case 0x535dd:/*inline native*/ {const m=R.m8,dv=R.dv,A=rd32(0x124db54),B=rd32(0x124db50);let c=0,w=0,al=0,v=0;for(;;){for(let k=0;k<2;k++){const a=k?edi:(edi+esi)|0;if(k)c=~c&255;else c=edx>>>24;w=dv.getUint16(a,true);al=((w&31)+m[0x124d850+c])&255;ebx=(ebx&~255)|m[0x124da50+al];ebx<<=6;al=(((w>>5)&63)+m[0x124d950+c])&255;ebx|=m[0x124d650+al];ebx<<=5;al=((w>>11)+m[0x124d850+c])&255;ebx|=m[0x124da50+al];dv.setUint16(a,ebx&0xffff,true);}eax=al;ecx=c;ebp=(ebp-1)|0;if(ebp<0)break;edi=(edi+A)|0;v=(edx>>>0)+(B>>>0);edx=v|0;if(v>4294967295)edi=(edi+esi)|0;}}pc=0x5368b;continue;
 case 0x535dd:/*ror edx,0x10*/ edx=((edx>>>16|edx<<16))|0;
 case 0x535e0:/*mov cl,dh*/ ecx=(ecx&~0xff)|((((edx>>8)&0xff))&0xff);
 case 0x535e2:/*ror edx,0x10*/ edx=((edx>>>16|edx<<16))|0;
